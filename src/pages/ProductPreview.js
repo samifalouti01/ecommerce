@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
+import useFacebookPixel from '../hooks/useFacebookPixel';
+import ReactPixel from 'react-facebook-pixel';
 import './ProductStyles.css';
 
 export default function ProductPreview() {
@@ -14,6 +16,17 @@ export default function ProductPreview() {
   const [quantity, setQuantity] = useState(1);
   const [activeImage, setActiveImage] = useState(0);
   const [selectedColor, setSelectedColor] = useState('');
+
+  useEffect(() => {
+    const fetchWebsite = async () => {
+      const { data: site } = await supabase.from('website').select('*').single();
+      setWebsite(site);
+    };
+
+    fetchWebsite();
+  }, []);
+
+  useFacebookPixel(website.facebook_pixel_api);
 
   useEffect(() => {
     fetchData();
@@ -47,32 +60,35 @@ export default function ProductPreview() {
 
   async function submitOrder(e) {
     e.preventDefault();
-
-    // Basic form validation
-    if (!form.name || !form.phone || !form.wilaya || !form.commune) {
-      alert('Please fill all required fields');
+  
+    if (!form.name || !form.phone || !form.wilaya || !form.commune || !selectedColor) {
+      alert('Please fill all required fields and select a color');
       return;
     }
+  
 
-    if (!form.name || !form.phone || !form.wilaya || !form.commune || !selectedColor) {
-        alert('Please fill all required fields and select a color');
-        return;
-      }
-      
+  
     try {
-        await supabase.from('orders_data').insert({
-            name: form.name,
-            phone: form.phone,
-            wilaya: form.wilaya,
-            commune: form.commune,
-            total_price: totalPrice.toString(),
-            quantity: quantity.toString(),
-            product_id: id,
-            product_title: product.title,
-            color: selectedColor
-          });                
+      await supabase.from('orders_data').insert({
+        name: form.name,
+        phone: form.phone,
+        wilaya: form.wilaya,
+        commune: form.commune,
+        total_price: totalPrice.toString(),
+        quantity: quantity.toString(),
+        product_id: id,
+        product_title: product.title,
+        color: selectedColor
+      });
+
+      ReactPixel.track('Purchase', {
+        value: totalPrice,
+        currency: 'DZD',
+      });
+  
+      localStorage.setItem(`order_${id}`, new Date().toISOString());
       alert('Order submitted successfully!');
-      // Reset form
+  
       setForm({ name: '', phone: '', wilaya: '', commune: '', deliveryType: 'home' });
       setQuantity(1);
       setSelectedColor('');
@@ -80,7 +96,7 @@ export default function ProductPreview() {
       alert('Error submitting order. Please try again.');
       console.error(error);
     }
-  }
+  }  
 
   // Function to process image URLs from text
   const processImageUrls = (imageUrlString) => {
