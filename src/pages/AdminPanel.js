@@ -1313,7 +1313,7 @@ export default function AdminPanel() {
                   setIsAuthenticated(false);
                   setUsername('');
                   setPassword('');
-                  navigate('/admin');
+                  navigate('/');
                 }}
               >
                 <span className="nav-icon">🚪</span> Logout
