@@ -66,7 +66,17 @@ export default function ProductPreview() {
       return;
     }
   
-
+    const lastOrderTime = localStorage.getItem(`order_${id}`);
+    if (lastOrderTime) {
+      const lastOrderDate = new Date(lastOrderTime);
+      const now = new Date();
+      const diffHours = (now - lastOrderDate) / (1000 * 60 * 60);
+  
+      if (diffHours < 24) {
+        alert('You have already placed an order for this product in the last 24 hours.');
+        return;
+      }
+    }
   
     try {
       await supabase.from('orders_data').insert({
