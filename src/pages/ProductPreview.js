@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
-import useFacebookPixel from '../hooks/useFacebookPixel';
-import ReactPixel from 'react-facebook-pixel';
 import './ProductStyles.css';
 
 export default function ProductPreview() {
@@ -16,17 +14,6 @@ export default function ProductPreview() {
   const [quantity, setQuantity] = useState(1);
   const [activeImage, setActiveImage] = useState(0);
   const [selectedColor, setSelectedColor] = useState('');
-
-  useEffect(() => {
-    const fetchWebsite = async () => {
-      const { data: site } = await supabase.from('website').select('*').single();
-      setWebsite(site);
-    };
-
-    fetchWebsite();
-  }, []);
-
-  useFacebookPixel(website.facebook_pixel_api);
 
   useEffect(() => {
     fetchData();
@@ -89,11 +76,6 @@ export default function ProductPreview() {
         product_id: id,
         product_title: product.title,
         color: selectedColor
-      });
-
-      ReactPixel.track('Purchase', {
-        value: totalPrice,
-        currency: 'DZD',
       });
   
       localStorage.setItem(`order_${id}`, new Date().toISOString());

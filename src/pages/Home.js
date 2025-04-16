@@ -28,6 +28,10 @@ export default function Home() {
     }
   }
 
+  const handleAdminPress = () => {
+    navigate('/adminpanel');
+  };  
+
   // Function to process image URLs from text
   const processImageUrls = (imageUrlString) => {
     if (!imageUrlString) return [];
@@ -159,6 +163,7 @@ export default function Home() {
             )}
             {website?.name && <h3 className="footer-title">{website.name}</h3>}
             {website?.description && <p className="footer-description">{website.description}</p>}
+            <p className='footer-admin' onClick={handleAdminPress}>Admin Panel</p>
           </div>
 
           <div className="footer-column contact-info">
