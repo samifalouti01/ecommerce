@@ -1,0 +1,69 @@
+/* App.css */
+.home {
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  width: 100px;
+}
+
+.search-input {
+  padding: 10px;
+  width: 200px;
+}
+
+.product-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.product-card {
+  width: 250px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.product-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.product-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.product-price {
+  font-size: 16px;
+  color: green;
+}
+
+.product-preview {
+  padding: 20px;
+}
+
+.image-slider {
+  display: flex;
+  overflow: hidden;
+}
+
+.product-image {
+  width: 100%;
+  height: auto;
+  margin-right: 10px;
+}
+
+.order-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
