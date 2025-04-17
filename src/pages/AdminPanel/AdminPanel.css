@@ -648,7 +648,8 @@
     }
     
     .sidebar-nav {
-      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: flex-start;
       justify-content: space-between;
       padding: 10px;
     }
@@ -672,6 +673,16 @@
       flex-direction: column;
       gap: 10px;
       text-align: center;
+    }
+
+    .chart-container {
+      max-width: 100%;
+      max-height: auto;
+    }
+
+    .charts-grid {
+      grid-template-columns: 1fr;
+      max-width: 80%;
     }
   }
 
