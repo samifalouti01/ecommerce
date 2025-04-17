@@ -22,7 +22,7 @@ export default function Home() {
       setWebsite(site);
       setProducts(products);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Erreur lors de la récupération des données :", error);
     } finally {
       setLoading(false);
     }
@@ -55,11 +55,11 @@ export default function Home() {
     }, [images]);
     
     if (images.length === 0) {
-      return <img src="/api/placeholder/300/300" alt="No image available" className="carousel-image" />;
+      return <img src="/api/placeholder/300/300" alt="Aucune image disponible" className="carousel-image" />;
     }
     
     if (images.length === 1) {
-      return <img src={images[0]} alt="Product" className="carousel-image" />;
+      return <img src={images[0]} alt="Produit" className="carousel-image" />;
     }
     
     return (
@@ -69,7 +69,7 @@ export default function Home() {
             <img 
               key={index} 
               src={image} 
-              alt={`Product view ${index + 1}`} 
+              alt={`Vue du produit ${index + 1}`} 
               className="carousel-image"
             />
           ))}
@@ -91,7 +91,7 @@ export default function Home() {
     return (
       <div className="loading-container">
         <div className="loader"></div>
-        <p>Loading products...</p>
+        <p>Chargement des produits...</p>
       </div>
     );
   }
@@ -114,7 +114,7 @@ export default function Home() {
           <input
             type="text"
             className="search-input"
-            placeholder="Search products..."
+            placeholder="Rechercher des produits..."
             value={search}
             onChange={e => setSearch(e.target.value)}
           />
@@ -124,12 +124,12 @@ export default function Home() {
       <main className="main-content">
         {filtered.length === 0 ? (
           <div className="no-results">
-            <p>No products found matching your search.</p>
+            <p>Aucun produit trouvé correspondant à votre recherche.</p>
           </div>
         ) : (
           <>
           <div className="products-count">
-            {filtered.length} {filtered.length === 1 ? 'Product' : 'Products'} Found
+            {filtered.length} {filtered.length === 1 ? 'Produit' : 'Produits'} trouvé{filtered.length > 1 ? 's' : ''}
           </div>
           <div className="products-grid">
             {filtered.map(p => (
@@ -152,6 +152,14 @@ export default function Home() {
           </div>
           </>
         )}
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
       </main>
 
       <footer className="site-footer">
@@ -163,7 +171,7 @@ export default function Home() {
             )}
             {website?.name && <h3 className="footer-title">{website.name}</h3>}
             {website?.description && <p className="footer-description">{website.description}</p>}
-            <p className='footer-admin' onClick={handleAdminPress}>Admin Panel</p>
+            <p className='footer-admin' onClick={handleAdminPress}>Panneau d'administration</p>
           </div>
 
           <div className="footer-column contact-info">
@@ -200,7 +208,7 @@ export default function Home() {
           </div>
 
           <div className="footer-column social-links">
-            <h3>Follow Us</h3>
+            <h3>Suivez-nous</h3>
             <div className="social-icons">
               {website?.facebook && (
                 <a href={website.facebook} target="_blank" rel="noopener noreferrer">
@@ -223,7 +231,7 @@ export default function Home() {
         </div>
 
         <div className="footer-bottom">
-          <p>&copy; {new Date().getFullYear()} {website?.name}. All Rights Reserved.</p>
+          <p>© {new Date().getFullYear()} {website?.name}. Tous droits réservés.</p>
         </div>
       </footer>
     </div>

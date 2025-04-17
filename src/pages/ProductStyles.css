@@ -52,7 +52,7 @@
   /* Header Styles */
   .site-header {
     background-color: white;
-    padding: 15px 0;
+    padding: 10px 0;
     position: sticky;
     top: 0;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -86,7 +86,7 @@
   }
   
   .search-container {
-    margin: 30px 20px;
+    margin: 20px 20px 0px 20px;
   }
   
   .search-input {

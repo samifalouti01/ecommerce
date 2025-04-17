@@ -3,7 +3,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import ProductPreview from './pages/ProductPreview';
-import AdminPanel from './pages/AdminPanel';
+import AdminPanel from './pages/AdminPanel/AdminPanel';
 
 export default function App() {
   return (

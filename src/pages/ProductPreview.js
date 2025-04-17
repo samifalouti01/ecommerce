@@ -49,7 +49,7 @@ export default function ProductPreview() {
     e.preventDefault();
   
     if (!form.name || !form.phone || !form.wilaya || !form.commune || !selectedColor) {
-      alert('Please fill all required fields and select a color');
+      alert('Veuillez remplir tous les champs requis et sélectionner une couleur');
       return;
     }
   
@@ -60,7 +60,7 @@ export default function ProductPreview() {
       const diffHours = (now - lastOrderDate) / (1000 * 60 * 60);
   
       if (diffHours < 24) {
-        alert('You have already placed an order for this product in the last 24 hours.');
+        alert('Vous avez déjà passé une commande pour ce produit au cours des dernières 24 heures.');
         return;
       }
     }
@@ -79,13 +79,13 @@ export default function ProductPreview() {
       });
   
       localStorage.setItem(`order_${id}`, new Date().toISOString());
-      alert('Order submitted successfully!');
+      alert('Commande soumise avec succès !');
   
       setForm({ name: '', phone: '', wilaya: '', commune: '', deliveryType: 'home' });
       setQuantity(1);
       setSelectedColor('');
     } catch (error) {
-      alert('Error submitting order. Please try again.');
+      alert('Erreur lors de la soumission de la commande. Veuillez réessayer.');
       console.error(error);
     }
   }  
@@ -100,7 +100,7 @@ export default function ProductPreview() {
     return (
       <div className="loading-container">
         <div className="loader"></div>
-        <p>Loading product details...</p>
+        <p>Chargement des détails du produit...</p>
       </div>
     );
   }
@@ -135,7 +135,7 @@ export default function ProductPreview() {
                   className={`thumbnail ${idx === activeImage ? 'active' : ''}`}
                   onClick={() => setActiveImage(idx)}
                 >
-                  <img src={url} alt={`${product.title} thumbnail ${idx+1}`} />
+                  <img src={url} alt={`${product.title} miniature ${idx+1}`} />
                 </div>
               ))}
             </div>
@@ -151,30 +151,29 @@ export default function ProductPreview() {
             <p>{product.description}</p>
           </div>
 
-
           <form className="order-form" onSubmit={submitOrder}>
             <div className="form-group">
-              <label htmlFor="name">Full Name *</label>
+              <label htmlFor="name">Nom complet *</label>
               <input 
                 id="name"
                 type="text" 
-                placeholder="Enter your full name" 
+                placeholder="Entrez votre nom complet" 
                 value={form.name}
                 onChange={e => setForm({ ...form, name: e.target.value })} 
                 required
-                />
+              />
             </div>
 
             <div className="form-group">
-              <label htmlFor="phone">Phone Number *</label>
+              <label htmlFor="phone">Numéro de téléphone *</label>
               <input 
                 id="phone"
                 type="tel" 
-                placeholder="Enter your phone number" 
+                placeholder="Entrez votre numéro de téléphone" 
                 value={form.phone}
                 onChange={e => setForm({ ...form, phone: e.target.value })} 
                 required
-                />
+              />
             </div>
 
             <div className="form-row">
@@ -185,11 +184,11 @@ export default function ProductPreview() {
                   value={form.wilaya}
                   onChange={e => setForm({ ...form, wilaya: e.target.value })}
                   required
-                  >
-                  <option value="">Select Wilaya</option>
+                >
+                  <option value="">Sélectionnez une wilaya</option>
                   {wilayas.map(w => (
-                      <option key={w.id} value={w.wilaya}>{w.wilaya}</option>
-                    ))}
+                    <option key={w.id} value={w.wilaya}>{w.wilaya}</option>
+                  ))}
                 </select>
               </div>
 
@@ -198,53 +197,54 @@ export default function ProductPreview() {
                 <input 
                   id="commune"
                   type="text" 
-                  placeholder="Enter your commune" 
+                  placeholder="Entrez votre commune" 
                   value={form.commune}
                   onChange={e => setForm({ ...form, commune: e.target.value })} 
                   required
-                  />
+                />
               </div>
             </div>
-                  {product.colors && (
-                    <div className="form-group">
-                        <label>Select Color *</label>
-                        <div className="color-options">
-                        {product.colors.split(',').map((color, idx) => (
-                            <button
-                            key={idx}
-                            type="button"
-                            className={`color-swatch ${selectedColor === color ? 'selected' : ''}`}
-                            style={{
-                                backgroundColor: color.trim(),
-                                border: selectedColor === color ? '3px solid #000' : '1px solid #ccc',
-                                width: '30px',
-                                height: '30px',
-                                margin: '5px',
-                                borderRadius: '50%',
-                                cursor: 'pointer'
-                            }}
-                            onClick={() => setSelectedColor(color.trim())}
-                            />
-                        ))}
-                        </div>
-                    </div>
-                    )}
+
+            {product.colors && (
+              <div className="form-group">
+                <label>Sélectionnez une couleur *</label>
+                <div className="color-options">
+                  {product.colors.split(',').map((color, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      className={`color-swatch ${selectedColor === color ? 'selected' : ''}`}
+                      style={{
+                        backgroundColor: color.trim(),
+                        border: selectedColor === color ? '3px solid #000' : '1px solid #ccc',
+                        width: '30px',
+                        height: '30px',
+                        margin: '5px',
+                        borderRadius: '50%',
+                        cursor: 'pointer'
+                      }}
+                      onClick={() => setSelectedColor(color.trim())}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
 
             <div className="form-group">
-              <label htmlFor="deliveryType">Delivery Method *</label>
+              <label htmlFor="deliveryType">Méthode de livraison *</label>
               <select 
                 id="deliveryType"
                 value={form.deliveryType}
                 onChange={e => setForm({ ...form, deliveryType: e.target.value })}
                 required
               >
-                <option value="home">Delivery at Home</option>
-                <option value="office">Stop at Office</option>
+                <option value="home">Livraison à domicile</option>
+                <option value="office">Retrait au bureau</option>
               </select>
             </div>
 
             <div className="form-group">
-              <label>Quantity</label>
+              <label>Quantité</label>
               <div className="quantity-selector">
                 <button 
                   type="button" 
@@ -266,25 +266,25 @@ export default function ProductPreview() {
 
             <div className="price-summary">
               <div className="price-row">
-                <span>Item Price:</span>
+                <span>Prix de l'article :</span>
                 <span>{product.price} DA</span>
               </div>
               <div className="price-row">
-                <span>Quantity:</span>
+                <span>Quantité :</span>
                 <span>× {quantity}</span>
               </div>
               <div className="price-row">
-                <span>Delivery Fee:</span>
+                <span>Frais de livraison :</span>
                 <span>{deliveryPrice} DA</span>
               </div>
               <div className="price-row total">
-                <span>Total Price:</span>
+                <span>Prix total :</span>
                 <span style={{ color: website.price_color || '#e63946' }}>{totalPrice} DA</span>
               </div>
             </div>
 
             <button type="submit" className="order-button">
-              Complete Order
+              Finaliser la commande
             </button>
           </form>
         </div>
@@ -292,7 +292,7 @@ export default function ProductPreview() {
 
       {related.length > 0 && (
         <div className="related-products">
-          <h3 className="section-title">Related Products</h3>
+          <h3 className="section-title">Produits similaires</h3>
           <div className="related-grid">
             {related.map(p => (
               <div key={p.id} className="related-item">
